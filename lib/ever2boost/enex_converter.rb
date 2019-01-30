@@ -27,10 +27,11 @@ module Ever2boost
         REXML::Document.new(enex).elements['en-export'].map do |el|
           if el != "\n"
             xml_document = REXML::Document.new(el.to_s).elements
+            content = xml_document['note/content/text()'].to_s.sub(/(<\?xml(.*?)\?>)?(.*?)<\!DOCTYPE(.*?)>/m, '')
             Note.new({
               title: xml_document['note/title'].text,
-              content: "<div>#{xml_document['note/content/text()'].to_s.sub(/<\?xml(.*?)\?>(.*?)<\!DOCTYPE(.*?)>/m, '')}</div>",
-              output_dir: output_dir
+              content: "<div>#{content}</div>",
+              output_dir: output_dir,
             })
           end
         end.compact.flatten
