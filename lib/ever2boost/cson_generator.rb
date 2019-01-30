@@ -15,8 +15,8 @@ content: '''
 '''
 tags: []
 isStarred: false
-createdAt: "#{timestamp}"
-updatedAt: "#{timestamp}"
+createdAt: "#{note.created_at}"
+updatedAt: "#{note.updated_at}"
         EOS
       end
 

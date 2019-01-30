@@ -27,10 +27,14 @@ module Ever2boost
         REXML::Document.new(enex).elements['en-export'].map do |el|
           if el != "\n"
             xml_document = REXML::Document.new(el.to_s).elements
+            created_at = xml_document['note/created'].text.sub(%r{^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2}).*$}, '\1-\2-\3T\4:\5:\6')
+            updated_at = xml_document['note/updated'].text.sub(%r{^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2}).*$}, '\1-\2-\3T\4:\5:\6')
             content = xml_document['note/content/text()'].to_s.sub(/(<\?xml(.*?)\?>)?(.*?)<\!DOCTYPE(.*?)>/m, '')
             Note.new({
               title: xml_document['note/title'].text,
               content: "<div>#{content}</div>",
+              created_at: created_at,
+              updated_at: updated_at,
               output_dir: output_dir,
             })
           end
