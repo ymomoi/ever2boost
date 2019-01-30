@@ -10,6 +10,7 @@ folder: "#{folder_hash}"
 title: "#{note.title}"
 content: '''
   # #{note.title}
+
   #{note.md_content}
 '''
 tags: []
